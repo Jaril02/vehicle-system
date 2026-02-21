@@ -1,0 +1,19 @@
+{% extends "inventory/base.html" %}
+{% block title %}Book {{ vehicle.name }}{% endblock %}
+{% block content %}
+<p class="muted"><a href="{% url 'inventory:vehicle_detail' vehicle.pk %}" style="color: var(--muted);">← Back to vehicle</a></p>
+<div class="card">
+    <h1>Book: {{ vehicle.name }}</h1>
+    <p class="muted">₹{{ vehicle.price_per_day }}/day</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.vehicle }}
+        <p><label for="id_customer_name">Customer name</label>{{ form.customer_name }}{% if form.customer_name.errors %} <span class="muted">{{ form.customer_name.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_customer_phone">Phone (10 digits)</label>{{ form.customer_phone }}{% if form.customer_phone.errors %} <span class="muted">{{ form.customer_phone.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_start_date">Start date</label>{{ form.start_date }}{% if form.start_date.errors %} <span class="muted">{{ form.start_date.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_end_date">End date</label>{{ form.end_date }}{% if form.end_date.errors %} <span class="muted">{{ form.end_date.errors.0 }}</span>{% endif %}</p>
+        {% if form.non_field_errors %}<p class="muted">{{ form.non_field_errors }}</p>{% endif %}
+        <button type="submit" class="btn">Confirm booking</button>
+    </form>
+</div>
+{% endblock %}

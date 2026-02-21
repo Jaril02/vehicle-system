@@ -1,0 +1,14 @@
+{% extends "inventory/base.html" %}
+{% block title %}Delete {{ vehicle.name }}{% endblock %}
+{% block content %}
+<p class="muted"><a href="{% url 'inventory:vehicle_detail' vehicle.pk %}" style="color: var(--muted);">← Back to vehicle</a></p>
+<div class="card">
+    <h1>Delete vehicle</h1>
+    <p>Are you sure you want to delete <strong>{{ vehicle.name }} — {{ vehicle.brand }}</strong>? This cannot be undone.</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="background: var(--danger);">Delete</button>
+        <a href="{% url 'inventory:vehicle_detail' vehicle.pk %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

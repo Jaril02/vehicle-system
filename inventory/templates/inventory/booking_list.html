@@ -1,0 +1,21 @@
+{% extends "inventory/base.html" %}
+{% block title %}Bookings{% endblock %}
+{% block content %}
+<h1>Bookings</h1>
+<div class="grid">
+    {% for booking in bookings %}
+    <div class="card">
+        <strong>{{ booking.vehicle.name }}</strong> — {{ booking.vehicle.brand }}
+        <p class="muted">Customer: {{ booking.customer_name }} · {{ booking.customer_phone }}</p>
+        <p>{{ booking.start_date }} to {{ booking.end_date }} ({{ booking.total_days }} days)</p>
+        <p><strong>Total: ₹{{ booking.total_price }}</strong></p>
+        <p style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <a href="{% url 'inventory:booking_update' booking.pk %}" class="btn btn-secondary">Update</a>
+            <a href="{% url 'inventory:booking_delete' booking.pk %}" class="btn" style="background: var(--danger);">Delete</a>
+        </p>
+    </div>
+    {% empty %}
+    <p class="muted">No bookings yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

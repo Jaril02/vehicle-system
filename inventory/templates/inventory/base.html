@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vehicle Rental{% endblock %} | Vehicle System</title>
+    <style>
+        :root {
+            --bg: #0f1419;
+            --surface: #1a2332;
+            --surface2: #243044;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79b8ff;
+            --success: #3fb950;
+            --danger: #f85149;
+            --radius: 8px;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        .wrap { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--surface2);
+            padding: 1rem 0;
+        }
+        header .wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+        .logo:hover { color: var(--accent-hover); }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-left: 1.25rem;
+        }
+        nav a:hover { color: var(--text); }
+        main { padding: 2rem 0; }
+        h1 { font-size: 1.75rem; margin-top: 0; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--surface2);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .btn:hover { background: var(--accent-hover); }
+        .btn-secondary { background: var(--surface2); color: var(--text); }
+        .btn-secondary:hover { background: #2d3d52; }
+        form label { display: block; margin-bottom: 0.25rem; color: var(--muted); font-size: 0.9rem; }
+        form input, form select {
+            width: 100%;
+            max-width: 280px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            background: var(--bg);
+            border: 1px solid var(--surface2);
+            border-radius: var(--radius);
+            color: var(--text);
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+        .badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+        .badge-available { background: rgba(63, 185, 80, 0.2); color: var(--success); }
+        .badge-unavailable { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
+        .muted { color: var(--muted); font-size: 0.9rem; }
+        .messages { list-style: none; padding: 0; margin: 0 0 1rem 0; }
+        .messages li { padding: 0.5rem 1rem; border-radius: var(--radius); margin-bottom: 0.5rem; }
+        .messages .error { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
+        .messages .success { background: rgba(63, 185, 80, 0.2); color: var(--success); }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <a href="{% url 'inventory:home' %}" class="logo">Vehicle System</a>
+            <nav>
+                <a href="{% url 'inventory:home' %}">Home</a>
+                <a href="{% url 'inventory:vehicle_list' %}">Vehicles</a>
+                <a href="{% url 'inventory:booking_list' %}">Bookings</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="wrap">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

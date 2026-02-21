@@ -1,0 +1,24 @@
+{% extends "inventory/base.html" %}
+{% block title %}{% if is_edit %}Update {{ vehicle.name }}{% else %}Add vehicle{% endif %}{% endblock %}
+{% block content %}
+<p class="muted">
+    {% if is_edit %}
+    <a href="{% url 'inventory:vehicle_detail' vehicle.pk %}" style="color: var(--muted);">← Back to vehicle</a>
+    {% else %}
+    <a href="{% url 'inventory:vehicle_list' %}" style="color: var(--muted);">← Back to vehicles</a>
+    {% endif %}
+</p>
+<div class="card">
+    <h1>{% if is_edit %}Update vehicle{% else %}Add vehicle{% endif %}</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        <p><label for="id_name">Name</label>{{ form.name }}{% if form.name.errors %} <span class="muted">{{ form.name.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_brand">Brand</label>{{ form.brand }}{% if form.brand.errors %} <span class="muted">{{ form.brand.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_year">Year</label>{{ form.year }}{% if form.year.errors %} <span class="muted">{{ form.year.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_price_per_day">Price per day</label>{{ form.price_per_day }}{% if form.price_per_day.errors %} <span class="muted">{{ form.price_per_day.errors.0 }}</span>{% endif %}</p>
+        <p><label for="id_fuel_type">Fuel type</label>{{ form.fuel_type }}{% if form.fuel_type.errors %} <span class="muted">{{ form.fuel_type.errors.0 }}</span>{% endif %}</p>
+        <p><label>{{ form.is_available }} Available</label></p>
+        <button type="submit" class="btn">{% if is_edit %}Update{% else %}Create{% endif %} vehicle</button>
+    </form>
+</div>
+{% endblock %}

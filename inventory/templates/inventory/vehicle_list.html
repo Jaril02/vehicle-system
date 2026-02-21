@@ -1,0 +1,47 @@
+{% extends "inventory/base.html" %}
+{% block title %}Vehicles{% endblock %}
+{% block content %}
+<h1>Available vehicles</h1>
+<p style="margin-bottom: 1rem;"><a href="{% url 'inventory:vehicle_create' %}" class="btn">Add vehicle</a></p>
+<form method="get" class="card" style="margin-bottom: 1.5rem;">
+    <label>Brand</label>
+    <select name="brand">
+        <option value="">All brands</option>
+        {% for b in brands %}
+        <option value="{{ b }}" {% if request.GET.brand == b %}selected{% endif %}>{{ b }}</option>
+        {% endfor %}
+    </select>
+    <label>Fuel type</label>
+    <select name="fuel_type">
+        <option value="">All</option>
+        <option value="Petrol" {% if request.GET.fuel_type == "Petrol" %}selected{% endif %}>Petrol</option>
+        <option value="Diesel" {% if request.GET.fuel_type == "Diesel" %}selected{% endif %}>Diesel</option>
+        <option value="Electric" {% if request.GET.fuel_type == "Electric" %}selected{% endif %}>Electric</option>
+        <option value="Hybrid" {% if request.GET.fuel_type == "Hybrid" %}selected{% endif %}>Hybrid</option>
+    </select>
+    <label>Availability</label>
+    <select name="available">
+        <option value="">All</option>
+        <option value="1" {% if request.GET.available == "1" %}selected{% endif %}>Available only</option>
+        <option value="0" {% if request.GET.available == "0" %}selected{% endif %}>Unavailable only</option>
+    </select>
+    <button type="submit" class="btn">Filter</button>
+</form>
+<div class="grid">
+    {% for vehicle in vehicles %}
+    <div class="card">
+        <strong>{{ vehicle.name }}</strong> — {{ vehicle.brand }}
+        <p class="muted">{{ vehicle.year }} · {{ vehicle.fuel_type }}</p>
+        <p>₹{{ vehicle.price_per_day }}/day</p>
+        <span class="badge {% if vehicle.is_available %}badge-available{% else %}badge-unavailable{% endif %}">
+            {% if vehicle.is_available %}Available{% else %}Unavailable{% endif %}
+        </span>
+        <p style="margin-top: 0.75rem;">
+            <a href="{% url 'inventory:vehicle_detail' vehicle.pk %}" class="btn">View & book</a>
+        </p>
+    </div>
+    {% empty %}
+    <p class="muted">No vehicles match your filters.</p>
+    {% endfor %}
+</div>
+{% endblock %}

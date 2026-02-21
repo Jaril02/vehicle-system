@@ -1,0 +1,20 @@
+{% extends "inventory/base.html" %}
+{% block title %}{{ vehicle.name }}{% endblock %}
+{% block content %}
+<p class="muted"><a href="{% url 'inventory:vehicle_list' %}" style="color: var(--muted);">← Back to vehicles</a></p>
+<div class="card">
+    <h1>{{ vehicle.name }} — {{ vehicle.brand }}</h1>
+    <p class="muted">{{ vehicle.year }} · {{ vehicle.fuel_type }}</p>
+    <p><strong>₹{{ vehicle.price_per_day }}</strong> per day</p>
+    <span class="badge {% if vehicle.is_available %}badge-available{% else %}badge-unavailable{% endif %}">
+        {% if vehicle.is_available %}Available{% else %}Unavailable{% endif %}
+    </span>
+    <p style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        {% if vehicle.is_available %}
+        <a href="{% url 'inventory:booking_create' vehicle.pk %}" class="btn">Book this vehicle</a>
+        {% endif %}
+        <a href="{% url 'inventory:vehicle_update' vehicle.pk %}" class="btn btn-secondary">Update</a>
+        <a href="{% url 'inventory:vehicle_delete' vehicle.pk %}" class="btn" style="background: var(--danger);">Delete</a>
+    </p>
+</div>
+{% endblock %}

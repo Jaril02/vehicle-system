@@ -1,0 +1,10 @@
+{% extends "inventory/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Vehicle Rental System</h1>
+<p class="muted">Browse available vehicles and manage your bookings.</p>
+<div class="card">
+    <p><a href="{% url 'inventory:vehicle_list' %}" class="btn">Browse vehicles</a></p>
+    <p><a href="{% url 'inventory:booking_list' %}" class="btn btn-secondary">View my bookings</a></p>
+</div>
+{% endblock %}
