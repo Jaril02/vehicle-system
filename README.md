@@ -20,14 +20,15 @@ A Django project for managing vehicles and bookings, with a web UI and REST API.
    source env/bin/activate
    ```
 
-3. **Copy the environment template**
+3. **Environment (optional for local dev)**
+   The app runs **without a `.env` file** for local development—it uses a built-in dev secret key. To use your own settings:
    ```bash
    # Windows
    copy .env.example .env
    # Linux/macOS
    cp .env.example .env
    ```
-   Edit `.env` and set at least `SECRET_KEY_VALUE` (see [Environment variables](#environment-variables)). The app loads these via `python-dotenv`.
+   Edit `.env` and set `SECRET_KEY_VALUE` and any other variables (see [Environment variables](#environment-variables)). **For production, you must set your own `SECRET_KEY_VALUE` in `.env`.**
 
 4. **Install dependencies** (see [Installation](#installation) below).
 
@@ -62,15 +63,15 @@ pip install -r requirements.txt
 
 ## Environment variables
 
-The project uses a `.env` file (loaded by `python-dotenv`). Copy `.env.example` to `.env` and set your values.
+The project loads settings from a `.env` file when present (via `python-dotenv`). **You can run the project without `.env`**—a development secret key is used automatically. For production, copy `.env.example` to `.env` and set your own values.
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `SECRET_KEY_VALUE` | Django secret key (required) | Long random string; see `.env.example` |
+| `SECRET_KEY_VALUE` | Django secret key (required in production; optional for local dev) | Long random string; see `.env.example` |
 | `DEBUG` | Debug mode | `True` or `False` |
 | `ALLOWED_HOSTS` | Comma-separated hosts | `localhost,127.0.0.1` |
 
-`.env.example` also includes commented examples for database configuration (SQLite by default, optional PostgreSQL). Do not commit `.env` to version control.
+`.env.example` includes sample/dummy values and commented database options (SQLite by default). Do not commit `.env` to version control.
 
 ---
 
