@@ -20,17 +20,20 @@ A Django project for managing vehicles and bookings, with a web UI and REST API.
    source env/bin/activate
    ```
 
-3. **Copy environment template (optional)**
+3. **Copy the environment template**
    ```bash
+   # Windows
    copy .env.example .env
+   # Linux/macOS
+   cp .env.example .env
    ```
-   Edit `.env` with your values. The app runs with defaults if `.env` is not used.
+   Edit `.env` and set at least `SECRET_KEY_VALUE` (see [Environment variables](#environment-variables)). The app loads these via `python-dotenv`.
 
 4. **Install dependencies** (see [Installation](#installation) below).
 
-5. **Run migrations** (see [Migrations](#migration-commands) below).
+5. **Run migrations** (see [Migration commands](#migration-commands) below).
 
-6. **Start the server** (see [How to run](#how-to-run-the-project) below).
+6. **Start the server** (see [How to run the project](#how-to-run-the-project) below).
 
 ---
 
@@ -39,10 +42,10 @@ A Django project for managing vehicles and bookings, with a web UI and REST API.
 Install required packages:
 
 ```bash
-pip install django djangorestframework django-filter
+pip install django djangorestframework django-filter python-dotenv
 ```
 
-Or, if you have a `requirements.txt` in the project root:
+Or with a `requirements.txt` in the project root:
 
 ```bash
 pip install -r requirements.txt
@@ -53,6 +56,21 @@ pip install -r requirements.txt
 - Django >= 4.0
 - djangorestframework
 - django-filter
+- python-dotenv
+
+---
+
+## Environment variables
+
+The project uses a `.env` file (loaded by `python-dotenv`). Copy `.env.example` to `.env` and set your values.
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `SECRET_KEY_VALUE` | Django secret key (required) | Long random string; see `.env.example` |
+| `DEBUG` | Debug mode | `True` or `False` |
+| `ALLOWED_HOSTS` | Comma-separated hosts | `localhost,127.0.0.1` |
+
+`.env.example` also includes commented examples for database configuration (SQLite by default, optional PostgreSQL). Do not commit `.env` to version control.
 
 ---
 
@@ -84,8 +102,8 @@ From the project root (where `manage.py` is):
 python manage.py runserver
 ```
 
-- **Web UI:** http://127.0.0.1:8000/  
-- **Admin:** http://127.0.0.1:8000/admin/  
+- **Web UI:** http://127.0.0.1:8000/
+- **Admin:** http://127.0.0.1:8000/admin/
 - **API base:** http://127.0.0.1:8000/api/
 
 ---
@@ -94,9 +112,9 @@ python manage.py runserver
 
 ### Using the browser
 
-- **List vehicles:** open http://127.0.0.1:8000/api/vehicles/  
-- **List bookings:** open http://127.0.0.1:8000/api/bookings/  
-- **Filter vehicles:** e.g. http://127.0.0.1:8000/api/vehicles/?brand=Toyota&is_available=true  
+- **List vehicles:** http://127.0.0.1:8000/api/vehicles/
+- **List bookings:** http://127.0.0.1:8000/api/bookings/
+- **Filter vehicles:** e.g. http://127.0.0.1:8000/api/vehicles/?brand=Toyota&is_available=true
 
 ### Using cURL
 
@@ -160,7 +178,7 @@ Base URL: **`/api/`**
 | PATCH | `/api/bookings/<id>/` | Partial update |
 | DELETE | `/api/bookings/<id>/` | Delete booking |
 
-Responses are JSON. `total_days` and `total_price` for bookings are read-only and set by the server.
+Responses are JSON. For bookings, `total_days` and `total_price` are read-only and set by the server.
 
 ---
 
@@ -215,8 +233,13 @@ Responses are JSON. `total_days` and `total_price` for bookings are read-only an
 
 ## Web UI
 
-- **Home:** `/`  
-- **Vehicles:** `/vehicles/` — list, filter, add, view, update, delete, book  
-- **Bookings:** `/bookings/` — list, update, delete  
+| Page | URL | Description |
+|------|-----|-------------|
+| Home | `/` | Landing with links to vehicles and bookings |
+| Vehicles | `/vehicles/` | List with brand, fuel type, and availability filters; add, view, update, delete, book |
+| Vehicle detail | `/vehicles/<id>/` | View vehicle; book, update, or delete |
+| Add vehicle | `/vehicles/create/` | Create a new vehicle |
+| Book vehicle | `/vehicles/<id>/book/` | Create a booking for that vehicle |
+| Bookings | `/bookings/` | List all bookings; update or delete each |
 
-Use the navbar to move between sections.
+Use the navbar to move between Home, Vehicles, and Bookings.
