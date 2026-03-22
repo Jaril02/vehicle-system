@@ -17,3 +17,13 @@ db.sqlite3
 *~
 
 
+# ----------------------
+# Documents (BLOCK THESE)
+# ----------------------
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx

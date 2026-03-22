@@ -244,3 +244,11 @@ Responses are JSON. For bookings, `total_days` and `total_price` are read-only a
 | Bookings | `/bookings/` | List all bookings; update or delete each |
 
 Use the navbar to move between Home, Vehicles, and Bookings.
+
+
+## Images ScreenShot
+![Home](assets/home.png)
+![Vehicle](assets/Vehicle.png)
+![Add vehicle ](assets/Vehicle_add.png)
+![book Vehicle](assets/booking_vehicle.png)
+![Booking](assets/Booking.png)
